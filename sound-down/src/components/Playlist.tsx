@@ -4,6 +4,11 @@ import { MusicPlayerContext } from '../contexts/MusicPlayerContext';
 
 const Playlist: React.FC = () => {
   const musicPlayerContext = useContext(MusicPlayerContext);
+  
+  if (!musicPlayerContext) {
+    return null; // Handle the case when context is not available
+  }
+  
   const { playlists, setCurrentPlaylist } = musicPlayerContext;
 
   return (

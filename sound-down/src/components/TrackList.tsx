@@ -4,7 +4,12 @@ import { MusicPlayerContext } from '../contexts/MusicPlayerContext';
 
 const TrackList: React.FC = () => {
   const musicPlayerContext = useContext(MusicPlayerContext);
-  const { currentPlaylist } = musicPlayerContext;
+  
+  if (!musicPlayerContext) {
+    return null; // Handle the case when context is not available
+  }
+  
+  const { currentPlaylist, playTrack } = useContext(MusicPlayerContext);
 
   return (
     <div className="track-list">

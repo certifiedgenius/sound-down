@@ -1,10 +1,12 @@
 // components/Player.tsx
 import React, { useContext } from 'react';
+import PlayerControls from './PlayerControls';
 import { MusicPlayerContext } from '../contexts/MusicPlayerContext';
 import { TrackList } from '../contexts/TrackList';
 
 const Player: React.FC = () => {
   const musicPlayerContext = useContext(MusicPlayerContext);
+  
   const { currentTrack, isPlaying, play, pause, next, previous, shuffle, repeat } = musicPlayerContext;
 
   return (
