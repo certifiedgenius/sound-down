@@ -15,7 +15,7 @@ const Playlist: React.FC = () => {
     <div className="playlist">
       <h2>Playlists</h2>
       <ul>
-        {playlists.map((playlist) => (
+        {playlists.map((playlist: Playlist) => (
           <li key={playlist.id} onClick={() => setCurrentPlaylist(playlist)}>
             {playlist.name}
           </li>

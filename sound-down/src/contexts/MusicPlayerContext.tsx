@@ -24,6 +24,7 @@ interface MusicPlayerContextType {
   previous: () => void;
   shuffle: () => void;
   repeat: () => void;
+  playlists: Playlist[];
   // Additional functions
 }
 
@@ -46,6 +47,7 @@ export const useMusicPlayer = () => {
   
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [currentPlaylist, setCurrentPlaylist] = useState<Playlist | null>(initialPlaylist);
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
   const play = (track: Track) => {
     // Logic to play the track using HTML5 audio element
@@ -81,6 +83,7 @@ export const useMusicPlayer = () => {
     previous,
     shuffle,
     repeat,
+    playlists,
     // other context data and functions
   };
 
