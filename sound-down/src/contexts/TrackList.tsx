@@ -4,7 +4,7 @@ import { MusicPlayerContext } from '../contexts/MusicPlayerContext';
 
 const TrackList: React.FC = () => {
   const musicPlayerContext = useContext(MusicPlayerContext);
-  const { currentPlaylist, playTrack } = musicPlayerContext;
+  const { currentPlaylist, play } = musicPlayerContext;
 
   return (
     <div className="track-list">
@@ -12,7 +12,7 @@ const TrackList: React.FC = () => {
       <ul>
         {currentPlaylist.tracks.map((track) => (
           <li key={track.id}>
-            <button onClick={() => playTrack(track)}>Play</button>
+            <button onClick={() => play(track)}>Play</button>
             {track.title} - {track.artist}
           </li>
         ))}

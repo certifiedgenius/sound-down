@@ -18,7 +18,7 @@ interface MusicPlayerContextType {
   currentPlaylist: Playlist | null;
   setCurrentPlaylist: (playlist: Playlist) => void;
   currentTrack: Track | null;
-  playTrack: (track: Track) => void;
+  play: (track: Track) => void;
   pause: () => void;
   next: () => void;
   previous: () => void;
@@ -48,12 +48,8 @@ export const MusicPlayerProvider: React.FC = ({ children }) => {
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [currentPlaylist, setCurrentPlaylist] = useState<Playlist | null>(null);
 
-  const playTrack = (track: Track) => {
+  const play = (track: Track) => {
     // Logic to play the track using HTML5 audio element
-  };
-  
-  const play = () => {
-    // Logic to start playing the current track
   };
 
   const pause = () => {
@@ -77,9 +73,10 @@ export const MusicPlayerProvider: React.FC = ({ children }) => {
   };
 
   const contextValue: MusicPlayerContextType = {
+    currentTrack,
     currentPlaylist,
     setCurrentPlaylist,
-    playTrack,
+    play,
     pause,
     next,
     previous,

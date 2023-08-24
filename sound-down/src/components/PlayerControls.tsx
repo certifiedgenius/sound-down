@@ -3,7 +3,12 @@ import React from 'react';
 import { useMusicPlayer } from '../contexts/MusicPlayerContext';
 
 const PlayerControls: React.FC = () => {
-  const { play, pause, next, previous } = useMusicPlayer();
+  const { 
+    play, 
+    pause, 
+    next, 
+    previous
+   } = useMusicPlayer();
 
   return (
     <div className="player-controls">
