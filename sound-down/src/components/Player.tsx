@@ -20,17 +20,26 @@ const Player: React.FC = () => {
     shuffle, 
     repeat
    } = musicPlayerContext;
+   
+   
+   const handlePlay = () => {
+    if (currentTrack) {
+      play(currentTrack);
+    }
+  };
 
+  
   return (
     <div className="player">
       <audio src={currentTrack?.url} controls autoPlay />
       <div className="controls">
         <button onClick={previous}>Previous</button>
         {currentTrack ? (
-          <button onClick={pause}>Pause</button>
+          <button onClick={handlePlay}>Play</button>
         ) : (
-          <button onClick={play}>Play</button>
+          <button onClick={handlePlay}>Play</button>
         )}
+        <button onClick={pause}>Pause</button>
         <button onClick={next}>Next</button>
       </div>
     </div>
