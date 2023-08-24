@@ -1,5 +1,5 @@
 // contexts/MusicPlayerContext.tsx
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, ReactNode  } from 'react';
 
 interface Track {
   id: string;
@@ -37,8 +37,7 @@ export const useMusicPlayer = () => {
     return context;
   };
 
-export const MusicPlayerProvider: React.FC = ({ children }) => {
-  // Define your context state and functions here
+  export const MusicPlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const initialPlaylist: Playlist = {
     id: 'default',
     name: 'Default Playlist',
@@ -46,7 +45,7 @@ export const MusicPlayerProvider: React.FC = ({ children }) => {
   };
   
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
-  const [currentPlaylist, setCurrentPlaylist] = useState<Playlist | null>(null);
+  const [currentPlaylist, setCurrentPlaylist] = useState<Playlist | null>(initialPlaylist);
 
   const play = (track: Track) => {
     // Logic to play the track using HTML5 audio element

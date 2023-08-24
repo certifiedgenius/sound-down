@@ -9,7 +9,7 @@ const TrackList: React.FC = () => {
     return null; // Handle the case when context is not available
   }
   
-  const { currentPlaylist, play } = useContext(MusicPlayerContext);
+  const { currentPlaylist, play } = musicPlayerContext;
 
   return (
     <div className="track-list">
