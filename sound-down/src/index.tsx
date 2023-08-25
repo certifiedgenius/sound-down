@@ -4,15 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { MusicPlayerProvider } from './contexts/MusicPlayerContext';
+import AuthContainer from './components/AuthContainer';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <MusicPlayerProvider>
-      <App />
-    </MusicPlayerProvider>
+      <MusicPlayerProvider>
+        <App />
+      </MusicPlayerProvider>
   </React.StrictMode>
 );
 
