@@ -1,42 +1,50 @@
 // src/components/TrackList.tsx
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, ChangeEvent } from 'react'; // Import ChangeEvent type
 
-const TrackList: React.FC = () => {
-  const [file, setFile] = useState<File | null>(null);
+const TrackList = () => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // Specify the type
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setFile(event.target.files[0]);
-    }
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => { // Add type annotation
+    const file = event.target.files && event.target.files[0];
+    setSelectedFile(file || null);
   };
 
   const handleUpload = async () => {
-    if (!file) {
+    if (!selectedFile) {
       return;
     }
-
+  
     const formData = new FormData();
-    formData.append('track', file);
-
+    formData.append('file', selectedFile);
+  
     try {
-      await axios.post('http://localhost:5000/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: formData,
       });
-      console.log('File uploaded successfully');
+  
+      if (response.ok) {
+        // Handle successful upload response
+        const responseData = await response.json();
+        console.log('File uploaded:', responseData);
+      } else {
+        // Handle error
+        console.error('Error uploading file');
+      }
     } catch (error) {
+      // Handle error
       console.error('Error uploading file:', error);
     }
   };
+  
 
   return (
     <div>
-      <input type="file" onChange={handleFileChange} />
+      <input type="file" accept=".mp3,.ogg,.wav" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
     </div>
   );
 };
+
 
 export default TrackList;

@@ -2,6 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Playlists from '../src/components/Playlist';
+import TrackList from '../src/components/TrackList';
+
 
 function App() {
   return (
@@ -10,10 +12,10 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         
     <div>
-      <h1>Spotify Playlist Viewer</h1>
-      <Playlists />
+      <h1>File upload</h1>
     </div>
-    
+    <Playlists />
+          <TrackList />
       </header>
     </div>
   );
