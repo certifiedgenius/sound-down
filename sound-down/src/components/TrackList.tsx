@@ -1,6 +1,7 @@
 // components/TrackList.tsx
 import React, { useContext } from 'react';
 import { MusicPlayerContext } from '../contexts/MusicPlayerContext';
+import Tracks from './Tracks';
 
 const TrackList: React.FC = () => {
   const musicPlayerContext = useContext(MusicPlayerContext);
