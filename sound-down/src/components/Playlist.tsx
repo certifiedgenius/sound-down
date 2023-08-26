@@ -20,6 +20,9 @@ const PlaylistComponent: React.FC = () => {
   const musicPlayerContext = useContext(MusicPlayerContext);
   const auth = useAuth();
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
+  const [tracks, setTracks] = useState<TrackInfo[]>([]);
+  
 
   useEffect(() => {
     if (auth) {
@@ -44,6 +47,31 @@ const PlaylistComponent: React.FC = () => {
       fetchPlaylists();
     }
   }, [auth]);
+  
+  const handlePlaylistClick = async (playlist: Playlist) => {
+    setSelectedPlaylist(playlist);
+
+    try {
+      const response = await axios.get(`https://api.spotify.com/v1/playlists/${playlist.id}/tracks`, {
+        headers: {
+          Authorization: `Bearer ${auth}`,
+        },
+      });
+
+      const fetchedTracks: TrackInfo[] = response.data.items.map((item: any) => ({
+        id: item.track.id,
+        title: item.track.name,
+        artist: item.track.artists.map((artist: any) => artist.name).join(', '),
+        url: item.track.preview_url,
+      }));
+
+      setTracks(fetchedTracks);
+    } catch (error) {
+      console.error('Error fetching tracks:', error);
+    }
+  };
+  
+  
 
   if (!musicPlayerContext || !auth) {
     return null;
@@ -55,13 +83,27 @@ const PlaylistComponent: React.FC = () => {
     <div className="playlist">
       <h2>Playlists</h2>
       {auth ? (
-        <ul>
-          {playlists.map((playlist) => (
-            <li key={playlist.id} onClick={() => setCurrentPlaylist(playlist)}>
-              {playlist.name}
-            </li>
-          ))}
-        </ul>
+        <div>
+          <ul>
+            {playlists.map((playlist) => (
+              <li key={playlist.id} onClick={() => handlePlaylistClick(playlist)}>
+                {playlist.name}
+              </li>
+            ))}
+          </ul>
+          {selectedPlaylist && (
+            <div>
+              <h3>Tracks in {selectedPlaylist.name}</h3>
+              <ul>
+                {tracks.map((track) => (
+                  <li key={track.id}>
+                    {track.title} - {track.artist}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       ) : (
         <div>
           <p>You need to authenticate to view playlists.</p>
