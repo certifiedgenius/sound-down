@@ -1,32 +1,42 @@
-// components/TrackList.tsx
-import React, { useContext } from 'react';
-import { MusicPlayerContext } from '../contexts/MusicPlayerContext';
-import TrackListView from '../views/TrackListView'; // Make sure to import the correct path to the view component
+// src/components/TrackList.tsx
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const TrackList: React.FC = () => {
-  const musicPlayerContext = useContext(MusicPlayerContext);
+  const [file, setFile] = useState<File | null>(null);
 
-  if (!musicPlayerContext) {
-    return null; // Handle the case when context is not available
-  }
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setFile(event.target.files[0]);
+    }
+  };
 
-  const { currentPlaylist, play } = musicPlayerContext;
+  const handleUpload = async () => {
+    if (!file) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('track', file);
+
+    try {
+      await axios.post('http://localhost:5000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('File uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
 
   return (
-    <div className="track-list">
-      <h2>{currentPlaylist?.name}</h2>
-      <TrackListView tracks={currentPlaylist?.tracks || []} /> {/* Provide an empty array as fallback */}
-      <ul>
-        {currentPlaylist?.tracks.map((track) => (
-          <li key={track.id}>
-            <button onClick={() => musicPlayerContext.play(track)}>Play</button>
-            {track.title} - {track.artist}
-          </li>
-        ))}
-      </ul>
+    <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload</button>
     </div>
   );
 };
 
 export default TrackList;
-
