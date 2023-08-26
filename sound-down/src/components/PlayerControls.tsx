@@ -8,19 +8,32 @@ const PlayerControls: React.FC = () => {
     pause, 
     next, 
     previous,
-    currentTrack
+    currentTrack,
+    isPlaying
    } = useMusicPlayer();
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      pause();
+    } else if (currentTrack) {
+      play(currentTrack);
+    }
+  };
 
   return (
     <div className="player-controls">
       <button onClick={previous}>Previous</button>
       {currentTrack ? (
-        <button onClick={() => play(currentTrack)}>Play</button>
+        <>
+          <button onClick={handlePlayPause}>
+            {isPlaying ? 'Pause' : 'Play'}
+          </button>
+          <audio controls src={currentTrack.url} />
+          <button onClick={next}>Next</button>
+        </>
       ) : (
         <button disabled>Play</button>
       )}
-      <button onClick={pause}>Pause</button>
-      <button onClick={next}>Next</button>
     </div>
   );
 };

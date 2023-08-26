@@ -1,5 +1,5 @@
 // contexts/MusicPlayerContext.tsx
-import React, { createContext, useState, useContext, ReactNode  } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 interface Track {
   id: string;
@@ -25,36 +25,47 @@ interface MusicPlayerContextType {
   shuffle: () => void;
   repeat: () => void;
   playlists: Playlist[];
-  // Additional functions
+  isPlaying: boolean;
 }
 
 export const MusicPlayerContext = createContext<MusicPlayerContextType | undefined>(undefined);
 
 export const useMusicPlayer = () => {
-    const context = useContext(MusicPlayerContext);
-    if (!context) {
-      throw new Error('useMusicPlayer must be used within a MusicPlayerProvider');
-    }
-    return context;
-  };
+  const context = useContext(MusicPlayerContext);
+  if (!context) {
+    throw new Error('useMusicPlayer must be used within a MusicPlayerProvider');
+  }
+  return context;
+};
 
-  export const MusicPlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const MusicPlayerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const initialPlaylist: Playlist = {
     id: 'default',
     name: 'Default Playlist',
     tracks: [] // Initialize with some default tracks if needed
   };
-  
+
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [currentPlaylist, setCurrentPlaylist] = useState<Playlist | null>(initialPlaylist);
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    // Logic to control audio playback based on isPlaying state
+    if (isPlaying) {
+      // Play audio logic
+    } else {
+      // Pause audio logic
+    }
+  }, [isPlaying]);
 
   const play = (track: Track) => {
-    // Logic to play the track using HTML5 audio element
+    setCurrentTrack(track);
+    setIsPlaying(true);
   };
 
   const pause = () => {
-    // Logic to pause the currently playing track
+    setIsPlaying(false);
   };
 
   const next = () => {
@@ -84,7 +95,7 @@ export const useMusicPlayer = () => {
     shuffle,
     repeat,
     playlists,
-    // other context data and functions
+    isPlaying,
   };
 
   return (

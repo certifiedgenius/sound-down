@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import Playlists from '../src/components/Playlist';
 import TrackList from '../src/components/TrackList';
+import Player from './components/Player';
+
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
     </div>
           <Playlists />
           <TrackList />
+          <Player />
       </header>
     </div>
   );
