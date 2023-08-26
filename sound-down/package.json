@@ -9,7 +9,7 @@
     "@types/axios": "^0.14.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.41",
-    "@types/react": "^18.2.20",
+    "@types/react": "^16.9.0",
     "@types/react-dom": "^18.2.7",
     "@types/react-icons": "^3.0.0",
     "@types/uuid": "^9.0.2",

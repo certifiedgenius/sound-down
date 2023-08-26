@@ -1,3 +1,4 @@
+// src/components/Playlist.tsx
 import React, { useContext, useEffect, useState } from 'react';
 import { MusicPlayerContext } from '../contexts/MusicPlayerContext';
 import { useAuth, LoginButton } from 'react-oauth2-login';
