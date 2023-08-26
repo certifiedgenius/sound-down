@@ -1,11 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { MusicPlayerContext } from '../contexts/MusicPlayerContext';
-
-interface Playlist {
-  id: string;
-  name: string;
-  tracks: TrackInfo[];
-}
 
 interface TrackInfo {
   id: string;
@@ -17,17 +11,36 @@ interface TrackInfo {
 const PlaylistComponent: React.FC = () => {
   const musicPlayerContext = useContext(MusicPlayerContext);
 
+  const [selectedPlaylist, setSelectedPlaylist] = useState<TrackInfo[] | null>(null);
+
   if (!musicPlayerContext) {
     return null;
   }
 
-  const { setCurrentPlaylist } = musicPlayerContext;
+  const handleDownload = (trackUrl: string, trackTitle: string) => {
+    const link = document.createElement('a');
+    link.href = trackUrl;
+    link.download = `${trackTitle}.mp3`;
+    link.click();
+  };
 
   return (
     <div className="playlist">
-      <h2>Playlists</h2>
-      {/* Replace the following part with your desired content */}
-      <p>This is where your playlist content should be rendered.</p>
+      {selectedPlaylist && (
+        <div>
+    
+          <ul>
+            {selectedPlaylist.map((track: TrackInfo) => (
+              <li key={track.id}>
+                {track.title} - {track.artist}
+                <button onClick={() => handleDownload(track.url, track.title)}>
+                  Download
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
