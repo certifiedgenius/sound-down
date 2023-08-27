@@ -57,8 +57,8 @@ const TrackList: React.FC<TrackListProps> = ({ setSelectedFile }) => {
   const tracks: TrackInfo[] = [
     {
       id: '1',
-      title: 'Song 1',
-      artist: 'Artist 1',
+      title: 'Livsstil',
+      artist: 'Ant Wan',
       url: '/audio1.mp3', // Update this URL
     },
     {
