@@ -23,8 +23,14 @@ const Player: React.FC = () => {
    
    
    const handlePlay = () => {
-    if (currentTrack) {
-      play(currentTrack);
+    const audioElement = document.querySelector('audio') as HTMLAudioElement | null;
+    
+    if (audioElement) {
+      if (currentTrack && audioElement.paused) {
+        play(currentTrack);
+      } else {
+        pause();
+      }
     }
   };
 

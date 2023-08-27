@@ -14,7 +14,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         
     <div>
-      <h1>File upload</h1>
+      <h1>Sound Down Music App</h1>
     </div>
           <Playlists />
           <TrackList />
