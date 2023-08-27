@@ -1,25 +1,22 @@
 import React, { useContext } from 'react';
-import PlayerControls from './PlayerControls';
 import { MusicPlayerContext } from '../contexts/MusicPlayerContext';
 
 const Player: React.FC = () => {
   const musicPlayerContext = useContext(MusicPlayerContext);
-  
+
   if (!musicPlayerContext) {
-    return null; // Handle the case when context is not available
+    return null;
   }
-  
-  const { 
-    currentTrack, 
-    play, 
-    pause, 
+
+  const {
+    currentTrack,
+    play,
+    pause,
     isPlaying,
-    next, 
-    previous, 
-    shuffle, 
-    repeat
-   } = musicPlayerContext;
-   
+    next,
+    previous,
+  } = musicPlayerContext;
+
   const handlePlayPause = () => {
     if (currentTrack) {
       if (isPlaying) {
@@ -32,7 +29,6 @@ const Player: React.FC = () => {
 
   return (
     <div className="player">
-      <audio src={currentTrack?.url} controls />
       <div className="controls">
         <button onClick={previous}>Previous</button>
         <button onClick={handlePlayPause}>
@@ -45,3 +41,4 @@ const Player: React.FC = () => {
 };
 
 export default Player;
+

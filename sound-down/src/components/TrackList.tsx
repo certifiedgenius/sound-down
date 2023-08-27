@@ -8,9 +8,13 @@ interface TrackInfo {
   url: string;
 }
 
-const TrackList: React.FC = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [tracks, setTracks] = useState<TrackInfo[]>([]); // Add tracks state
+interface TrackListProps {
+  setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>;
+}
+
+const TrackList: React.FC<TrackListProps> = ({ setSelectedFile }) => {
+  const [selectedFileState, setSelectedFileState] = useState<File | null>(null);
+  const [tracks, setTracks] = useState<TrackInfo[]>([]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -18,13 +22,13 @@ const TrackList: React.FC = () => {
   };
 
   const handleUpload = async () => {
-    if (!selectedFile) {
+    if (!selectedFileState) {
       return;
     }
-  
+
     const formData = new FormData();
-    formData.append('file', selectedFile);
-  
+    formData.append('file', selectedFileState);
+
     try {
       const response = await fetch('http://localhost:5000/upload', {
         method: 'POST',
@@ -32,15 +36,12 @@ const TrackList: React.FC = () => {
       });
 
       if (response.ok) {
-        // Handle successful upload response
         const responseData = await response.json();
         console.log('File uploaded:', responseData);
       } else {
-        // Handle error
         console.error('Error uploading file');
       }
     } catch (error) {
-      // Handle error
       console.error('Error uploading file:', error);
     }
   };

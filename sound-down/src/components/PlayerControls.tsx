@@ -25,10 +25,10 @@ const PlayerControls: React.FC = () => {
       <button onClick={previous}>Previous</button>
       {currentTrack ? (
         <>
-          <button onClick={() => (isPlaying ? pause() : play(currentTrack))}>
+          <button onClick={handlePlayPause}>
             {isPlaying ? 'Pause' : 'Play'}
           </button>
-          <audio controls src={currentTrack.url} />
+          <audio controls src={currentTrack.url}></audio>
           <button onClick={next}>Next</button>
         </>
       ) : (

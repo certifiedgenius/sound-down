@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Playlists from '../src/components/Playlist';
-import TrackList from '../src/components/TrackList';
+import Playlist from './components/Playlist';
+import TrackList from './components/TrackList';
 import Player from './components/Player';
-import { MusicPlayerProvider } from '../src/contexts/MusicPlayerContext';
-
-
+import SimplePlayerControls from './components/SimplePlayerControls';
 
 function App() {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         
-      <div>
-        <h1>Sound Down Music App</h1>
-      </div>
+        <div>
+          <h1>Sound Down Music App</h1>
+        </div>
         
-          <Playlists />
-          <TrackList />
+        {/* Replace this with your context provider */}
+        {/* <MusicPlayerProvider> */}
+          <Playlist />
+          <TrackList setSelectedFile={setSelectedFile} />
           <Player />
-        
+          <SimplePlayerControls selectedFile={selectedFile} />
+        {/* </MusicPlayerProvider> */}
       </header>
     </div>
   );

@@ -54,9 +54,11 @@ export const MusicPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
     const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
 
     if (isPlaying && currentTrack) {
+      console.log('Playing audio:', currentTrack.title);
       audioElement.src = currentTrack.url;
       audioElement.play();
     } else {
+      console.log('Paused audio');
       audioElement.pause();
     }
   }, [isPlaying, currentTrack]);
