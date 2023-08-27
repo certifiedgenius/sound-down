@@ -4,9 +4,10 @@ import './App.css';
 import Playlist from './components/Playlist';
 import TrackList from './components/TrackList';
 import Player from './components/Player';
-import SimplePlayerControls from './components/SimplePlayerControls';
+import PlayerControls from './components/PlayerControls'; // Import PlayerControls component
+import { MusicPlayerProvider } from './contexts/MusicPlayerContext';
 
-function App() {
+const App: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   return (
@@ -18,13 +19,12 @@ function App() {
           <h1>Sound Down Music App</h1>
         </div>
         
-        {/* Replace this with your context provider */}
-        {/* <MusicPlayerProvider> */}
+        <MusicPlayerProvider>
           <Playlist />
           <TrackList setSelectedFile={setSelectedFile} />
           <Player />
-          <SimplePlayerControls selectedFile={selectedFile} />
-        {/* </MusicPlayerProvider> */}
+          <PlayerControls /> {/* Add PlayerControls component */}
+        </MusicPlayerProvider>
       </header>
     </div>
   );
