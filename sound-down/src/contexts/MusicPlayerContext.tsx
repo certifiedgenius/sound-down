@@ -52,7 +52,7 @@ export const MusicPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
 
   useEffect(() => {
     const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
-
+  
     if (isPlaying && currentTrack) {
       console.log('Playing audio:', currentTrack.title);
       audioElement.src = currentTrack.url;
@@ -64,11 +64,13 @@ export const MusicPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
   }, [isPlaying, currentTrack]);
 
   const play = (track: Track) => {
+    console.log('Playing:', track.title);
     setCurrentTrack(track);
     setIsPlaying(true);
   };
-
+  
   const pause = () => {
+    console.log('Pausing');
     setIsPlaying(false);
   };
 

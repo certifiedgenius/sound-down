@@ -16,6 +16,9 @@ const Player: React.FC = () => {
     next,
     previous,
   } = musicPlayerContext;
+  
+  console.log('currentTrack:', currentTrack);
+  console.log('isPlaying:', isPlaying);
 
   const handlePlayPause = () => {
     if (currentTrack) {

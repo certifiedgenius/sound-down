@@ -1,5 +1,6 @@
 // src/components/TrackList.tsx
 import React, { useState, ChangeEvent } from 'react';
+import { useMusicPlayer } from '../contexts/MusicPlayerContext';
 
 interface TrackInfo {
   id: string;
@@ -13,8 +14,8 @@ interface TrackListProps {
 }
 
 const TrackList: React.FC<TrackListProps> = ({ setSelectedFile }) => {
-  const [tracks, setTracks] = useState<TrackInfo[]>([]); // Add tracks state
-  const [selectedFile, setSelectedFileState] = useState<File | null>(null); // Change selectedFileState to selectedFile
+  const [selectedFile, setSelectedFileState] = useState<File | null>(null);
+  const { play } = useMusicPlayer();
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -36,33 +37,44 @@ const TrackList: React.FC<TrackListProps> = ({ setSelectedFile }) => {
       });
 
       if (response.ok) {
-        // Handle successful upload response
         const responseData = await response.json();
         console.log('File uploaded:', responseData);
       } else {
-        // Handle error
         console.error('Error uploading file');
       }
     } catch (error) {
-      // Handle error
       console.error('Error uploading file:', error);
     }
   };
 
   const handleDownload = (trackUrl: string, trackTitle: string) => {
-    // Create an anchor element and simulate a click to download the track
     const link = document.createElement('a');
     link.href = trackUrl;
     link.download = `${trackTitle}.mp3`;
     link.click();
   };
 
+  const tracks: TrackInfo[] = [
+    {
+      id: '1',
+      title: 'Song 1',
+      artist: 'Artist 1',
+      url: '/audio1.mp3', // Update this URL
+    },
+    {
+      id: '2',
+      title: 'Song 2',
+      artist: 'Artist 2',
+      url: '/audio2.mp3', // Update this URL
+    },
+    // ... other tracks
+  ];
+
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
-
-      {/* Render the list of tracks */}
+      
       {tracks.map((track) => (
         <div key={track.id}>
           <p>
@@ -70,6 +82,7 @@ const TrackList: React.FC<TrackListProps> = ({ setSelectedFile }) => {
             <button onClick={() => handleDownload(track.url, track.title)}>
               Download
             </button>
+            <button onClick={() => play(track)}>Play</button>
           </p>
         </div>
       ))}

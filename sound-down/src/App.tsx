@@ -4,8 +4,7 @@ import './App.css';
 import Playlist from './components/Playlist';
 import TrackList from './components/TrackList';
 import Player from './components/Player';
-import PlayerControls from './components/PlayerControls'; // Import PlayerControls component
-import { MusicPlayerProvider } from './contexts/MusicPlayerContext';
+import { MusicPlayerProvider } from './contexts/MusicPlayerContext'; // Import the MusicPlayerProvider
 
 const App: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -23,7 +22,6 @@ const App: React.FC = () => {
           <Playlist />
           <TrackList setSelectedFile={setSelectedFile} />
           <Player />
-          <PlayerControls /> {/* Add PlayerControls component */}
         </MusicPlayerProvider>
       </header>
     </div>

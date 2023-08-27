@@ -3,14 +3,7 @@ import React from 'react';
 import { useMusicPlayer } from '../contexts/MusicPlayerContext';
 
 const PlayerControls: React.FC = () => {
-  const { 
-    play, 
-    pause, 
-    next, 
-    previous,
-    currentTrack,
-    isPlaying
-   } = useMusicPlayer();
+  const { play, pause, next, previous, currentTrack, isPlaying } = useMusicPlayer();
 
   const handlePlayPause = () => {
     if (isPlaying) {
