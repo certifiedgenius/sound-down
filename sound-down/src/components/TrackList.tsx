@@ -21,12 +21,12 @@ const TrackList: React.FC = () => {
     if (!selectedFile) {
       return;
     }
-
+  
     const formData = new FormData();
     formData.append('file', selectedFile);
-
+  
     try {
-      const response = await fetch('/upload', {
+      const response = await fetch('http://localhost:5000/upload', {
         method: 'POST',
         body: formData,
       });

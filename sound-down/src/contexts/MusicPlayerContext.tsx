@@ -51,13 +51,15 @@ export const MusicPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    // Logic to control audio playback based on isPlaying state
-    if (isPlaying) {
-      // Play audio logic
+    const audioElement = document.getElementById('audio-element') as HTMLAudioElement;
+
+    if (isPlaying && currentTrack) {
+      audioElement.src = currentTrack.url;
+      audioElement.play();
     } else {
-      // Pause audio logic
+      audioElement.pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying, currentTrack]);
 
   const play = (track: Track) => {
     setCurrentTrack(track);
@@ -69,19 +71,36 @@ export const MusicPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
   };
 
   const next = () => {
-    // Logic to play the next track in the playlist
+    if (currentPlaylist?.tracks) {
+      const currentIndex = currentPlaylist.tracks.findIndex(track => track.id === currentTrack?.id);
+      if (currentIndex !== undefined && currentIndex !== null && currentIndex < currentPlaylist.tracks.length - 1) {
+        play(currentPlaylist.tracks[currentIndex + 1]);
+      }
+    }
   };
-
+  
   const previous = () => {
-    // Logic to play the previous track in the playlist
+    if (currentPlaylist?.tracks) {
+      const currentIndex = currentPlaylist.tracks.findIndex(track => track.id === currentTrack?.id);
+      if (currentIndex !== undefined && currentIndex !== null && currentIndex > 0) {
+        play(currentPlaylist.tracks[currentIndex - 1]);
+      }
+    }
   };
 
   const shuffle = () => {
-    // Logic to shuffle the playlist
+    if (currentPlaylist) {
+      const shuffledTracks = [...currentPlaylist.tracks];
+      for (let i = shuffledTracks.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledTracks[i], shuffledTracks[j]] = [shuffledTracks[j], shuffledTracks[i]];
+      }
+      setCurrentPlaylist({ ...currentPlaylist, tracks: shuffledTracks });
+    }
   };
 
   const repeat = () => {
-    // Logic to toggle repeat mode
+    // Toggle repeat mode if needed
   };
 
   const contextValue: MusicPlayerContextType = {
@@ -101,6 +120,7 @@ export const MusicPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
   return (
     <MusicPlayerContext.Provider value={contextValue}>
       {children}
+      <audio id="audio-element" controls />
     </MusicPlayerContext.Provider>
   );
 };
